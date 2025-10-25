@@ -9,9 +9,7 @@ export const sendEmailMessage = async (
   payload: Email
 ): Promise<EmailResponse | null> => {
   try {
-    debugger;
     const response = await api.post<EmailResponse>('/email', payload);
-    debugger;
     return response.data;
   } catch (e) {
     return null;

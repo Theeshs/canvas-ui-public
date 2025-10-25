@@ -7,6 +7,7 @@ import Education from '@/components/Education';
 import Projects from '@/components/Projects';
 import Contact from '@/components/Contact';
 import ScheduleCall from '@/components/ScheduleCall';
+import Photography from '@/components/Photography';
 import Footer from '@/components/Footer';
 import { useQuery } from '@tanstack/react-query';
 import { portfolioFetchConstant } from '@/consts';
@@ -33,6 +34,7 @@ const Index = () => {
       <Experience experiences={data?.experiences || []} />
       <Education educations={data?.educations || []} />
       <Projects projects={data?.projects || []} />
+      <Photography />
       <Contact
         country={data?.recidential_country || ''}
         email={data?.email || ''}
