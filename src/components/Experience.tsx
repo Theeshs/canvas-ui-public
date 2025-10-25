@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Briefcase, ChevronDown, ChevronUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { UserExperience } from '@/types/experience';
+import { formatDate } from '../lib/utils';
 
 type Props = {
   experiences: UserExperience[];
@@ -66,7 +67,8 @@ const Experience = ({ experiences }: Props) => {
                             {exp.company_name}
                           </p>
                           <p className='text-sm text-muted-foreground'>
-                            {exp.start_date} - {exp.end_date}
+                            {formatDate(exp.start_date)} -{' '}
+                            {formatDate(exp.end_date)}
                           </p>
                         </div>
                       </div>

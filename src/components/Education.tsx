@@ -1,6 +1,7 @@
 import { GraduationCap } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { UserEducation } from '@/types/education';
+import { formatDate } from '../lib/utils';
 
 type Props = {
   educations: UserEducation[];
@@ -32,7 +33,7 @@ const Education = ({ educations }: Props) => {
                       {edu.institue_name}
                     </p>
                     <p className='text-sm text-muted-foreground mb-3'>
-                      {edu.start_date} - {edu.end_date}
+                      {formatDate(edu.start_date)} - {formatDate(edu.end_date)}
                     </p>
                     <p className='text-muted-foreground'>{edu.description}</p>
                   </div>
