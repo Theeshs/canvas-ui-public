@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
+import { useMutation } from '@tanstack/react-query';
+import { sendEmailMessage } from '../requests/emailRequest';
 
 type Porps = {
   country: string;
@@ -12,6 +14,21 @@ type Porps = {
 
 const Contact = ({ country, email }: Porps) => {
   const { toast } = useToast();
+  const mutation = useMutation({
+    mutationFn: sendEmailMessage,
+    onSuccess: (data) => {
+      console.log('Email sent', data.message);
+      toast({
+        title: data.message,
+        description: "Thank you for reaching out. I'll get back to you soon.",
+      });
+      // alert(data.message);
+    },
+    onError: (error) => {
+      console.error('Error sending user:', error);
+      alert(error.stack);
+    },
+  });
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -20,10 +37,7 @@ const Contact = ({ country, email }: Porps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: 'Message Sent!',
-      description: "Thank you for reaching out. I'll get back to you soon.",
-    });
+    mutation.mutate(formData);
     setFormData({ name: '', email: '', message: '' });
   };
 
