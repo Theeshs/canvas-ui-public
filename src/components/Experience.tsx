@@ -85,7 +85,7 @@ const Experience = ({ experiences }: Props) => {
                           variant='ghost'
                           size='sm'
                           onClick={() => toggleCard(index)}
-                          className='mt-4 text-accent hover:text-accent/80 w-full'
+                          className='mt-4 text-accent hover:text-accent hover:bg-accent/10 w-full'
                         >
                           {expandedCards.includes(index) ? (
                             <>
