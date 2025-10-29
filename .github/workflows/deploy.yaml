@@ -88,6 +88,8 @@ jobs:
           rm -rf .github
           git rm -rf --cached .github || true
           rm -f .gitignore
+          rm -f .env.development
+          rm -f .env.production
           echo "✅ Private files removed"
 
       - name: Configure Git
