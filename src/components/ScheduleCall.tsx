@@ -21,6 +21,7 @@ import { toast } from '@/hooks/use-toast';
 const ScheduleCall = () => {
   const [date, setDate] = useState<Date>();
   const [selectedTime, setSelectedTime] = useState<string>();
+  const [datePickerOpen, setDatePickerOpen] = useState(false);
 
   const timeSlots = [
     '09:00',
@@ -131,7 +132,10 @@ const ScheduleCall = () => {
                   <label className='text-sm font-medium text-foreground mb-2 block'>
                     Select Date
                   </label>
-                  <Popover>
+                  <Popover
+                    open={datePickerOpen}
+                    onOpenChange={setDatePickerOpen}
+                  >
                     <PopoverTrigger asChild>
                       <Button
                         variant='outline'
@@ -148,7 +152,10 @@ const ScheduleCall = () => {
                       <CalendarComponent
                         mode='single'
                         selected={date}
-                        onSelect={setDate}
+                        onSelect={(newDate) => {
+                          setDate(newDate);
+                          setDatePickerOpen(false);
+                        }}
                         disabled={(date) => date < new Date()}
                         initialFocus
                         className='pointer-events-auto'
