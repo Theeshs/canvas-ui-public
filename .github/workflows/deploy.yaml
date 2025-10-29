@@ -61,3 +61,48 @@ jobs:
               -e NODE_ENV=production \
               ${{ secrets.DOCKERHUB_USERNAME }}/canvas-ui:latest
             docker system prune -f
+
+  mirror-to-public:
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout private repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PUBLIC_REPO_TOKEN }}
+
+      - name: Validate token exists
+        run: |
+          if [[ -z "${{ secrets.PUBLIC_REPO_TOKEN }}" ]]; then
+            echo "❌ ERROR: PUBLIC_REPO_TOKEN secret is not configured!"
+            echo "Go to Settings > Secrets and variables > Actions > New repository secret"
+            exit 1
+          fi
+          echo "✅ Token found"
+
+      - name: Remove private files
+        run: |
+          rm -rf .github
+          git rm -rf --cached .github || true
+          rm -f .gitignore
+          echo "✅ Private files removed"
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          echo "✅ Git configured"
+
+      - name: Add public remote
+        run: |
+          git remote remove public 2>/dev/null || true
+          git remote add public "https://x-access-token:${{ secrets.PUBLIC_REPO_TOKEN }}@github.com/Theeshs/canvas-ui-public.git"
+          echo "✅ Remote added"
+
+      - name: Push to public repo
+        run: |
+          git push public HEAD:main --force
+          echo "✅ Successfully mirrored to public repo"
