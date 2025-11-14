@@ -9,7 +9,9 @@ const Hero = ({ first_name, last_name }: Props) => {
   return (
     <section className='min-h-screen flex items-center justify-center pt-20 px-4'>
       <div className='container mx-auto text-center fade-in'>
-        <p className='text-lg text-muted-foreground mb-4'>Hello fren 👋, I'm</p>
+        <p className='text-lg text-muted-foreground mb-4'>
+          Hej, Välkommen! 🙏, I'm
+        </p>
         <h1 className='text-5xl md:text-7xl font-bold mb-6 text-foreground'>
           {first_name} {last_name}
         </h1>
